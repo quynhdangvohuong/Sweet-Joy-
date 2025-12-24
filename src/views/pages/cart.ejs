@@ -1,0 +1,55 @@
+<div class="container my-5">
+  <h2 class="mb-4" style="font-family:'Pacifico'">🛒 Giỏ hàng</h2>
+
+  <% if (cart.length === 0) { %>
+    <p>Giỏ hàng trống 😢</p>
+    <a href="/" class="btn btn-danger">Tiếp tục mua sắm</a>
+  <% } else { %>
+
+  <table class="table align-middle">
+    <thead>
+      <tr>
+        <th>Sản phẩm</th>
+        <th>Giá</th>
+        <th>Số lượng</th>
+        <th>Thành tiền</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% cart.forEach(item => { %>
+        <tr>
+          <td>
+            <img src="<%= item.product.image %>" width="60">
+            <strong><%= item.product.name %></strong>
+          </td>
+          <td><%= item.product.price.toLocaleString() %> đ</td>
+          <td><%= item.quantity %></td>
+          <td>
+            <%= (item.product.price * item.quantity).toLocaleString() %> đ
+          </td>
+          <td>
+            <form action="/cart/remove" method="POST">
+              <input type="hidden" name="productId" value="<%= item.product._id %>">
+              <button class="btn btn-sm btn-outline-danger">❌</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <h4 class="text-end">
+    Tổng tiền:
+    <span class="text-danger">
+      <%= total.toLocaleString() %> đ
+    </span>
+  </h4>
+
+  <div class="text-end mt-3">
+    <a href="/" class="btn btn-outline-secondary">← Mua thêm</a>
+    <a href="/checkout" class="btn btn-danger">Thanh toán</a>
+  </div>
+
+  <% } %>
+</div>

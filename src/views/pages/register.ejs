@@ -1,0 +1,58 @@
+<div class="container my-5" style="max-width: 500px;">
+  <h2 class="text-center mb-4" style="font-family:'Pacifico'">
+    🍰 Đăng ký Sweet Joy
+  </h2>
+
+  <form id="registerForm">
+    <div class="mb-3">
+      <label class="form-label">Họ và tên</label>
+      <input type="text" class="form-control" name="name" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" name="email" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Mật khẩu</label>
+      <input type="password" class="form-control" name="password" minlength="6" required>
+    </div>
+
+    <button type="submit" class="btn btn-danger w-100">
+      Đăng ký
+    </button>
+
+    <p class="text-center mt-3">
+      Đã có tài khoản?
+      <a href="/login">Đăng nhập</a>
+    </p>
+  </form>
+
+  <div id="message" class="text-center mt-3"></div>
+</div>
+
+<script>
+document.getElementById("registerForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData.entries());
+
+  const res = await fetch("/api/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+  const msg = document.getElementById("message");
+
+  if (res.ok) {
+    msg.innerHTML = "<span class='text-success'>Đăng ký thành công 🎉</span>";
+    setTimeout(() => window.location.href = "/login", 1500);
+  } else {
+    msg.innerHTML = `<span class='text-danger'>${result.message}</span>`;
+  }
+});
+</script>

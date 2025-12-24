@@ -1,0 +1,36 @@
+<section class="container my-4">
+  <h2 class="mb-3" style="color:#000000;font-family:'Pacifico'; font-size: 30px;">
+    <%= title %>
+  </h2>
+
+  <div class="row">
+    <% products.forEach(function(p) { %>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="product-card text-center">
+
+          <img
+            src="<%= p.image %>"
+            alt="<%= p.name %>"
+            class="img-fluid mb-2"
+            style="height:250px; width:250px; object-fit:cover;"
+          >
+
+          <h6><%= p.name %></h6>
+
+          <p class="text-danger fw-bold">
+            <%= p.price.toLocaleString() %> đ
+          </p>
+
+          <!-- THÊM VÀO GIỎ -->
+          <form action="/cart/add" method="POST">
+            <input type="hidden" name="productId" value="<%= p._id %>">
+            <a type="submit" class="btn btn-outline-danger btn-sm">
+              Thêm vào giỏ hàng
+            </a>
+          </form>
+
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</section>
