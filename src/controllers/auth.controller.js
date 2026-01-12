@@ -48,7 +48,7 @@ exports.login = async (req, res) => {
 
     req.session.userId = user._id;
 
-    // 3. Tạo token
+    // 2. Tạo token
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
